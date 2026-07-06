@@ -13,6 +13,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: "Dit image navn her"
   GITHUB_ACTOR: "Dit github brugernavn her"
+  DOCKER_IMAGE_CONTEXT: src/CiCd
 
 
 jobs:
@@ -43,6 +44,6 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v7
         with:
-          context: src/CiCd
+          context: ${{ env.DOCKER_IMAGE_CONTEXT }}
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.GITHUB_ACTOR }}/${{ env.IMAGE_NAME }}:latest
