@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - opened
@@ -14,14 +15,15 @@ env:
   SOLUTION_PATH: "CICD-Template.slnx"
 
 jobs:
-  Restore:
+  Build-and-Test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
     - name: Get Code
       uses: actions/checkout@v7
 
-    - name: Install .NET
+    - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
          dotnet-version: ${{ env.DOTNET_VERSION }}
@@ -30,7 +32,13 @@ jobs:
       run: dotnet restore ${{ env.SOLUTION_PATH }}
 
     - name: Build
-      run: dotnet build ${{ env.SOLUTION_PATH }} --no-restore
+      run: dotnet build ${{ env.SOLUTION_PATH }} 
+        --configuration Release
+        --no-restore
 
     - name: Test
-      run: dotnet test --no-restore --no-build --verbosity normal
+      run: dotnet test ${{ env.SOLUTION_PATH }}
+        --configuration Release
+        --no-restore 
+        --no-build 
+        --verbosity normal
