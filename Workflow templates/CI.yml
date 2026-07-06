@@ -1,18 +1,20 @@
-name: CI
+name: CI - CiCd
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: #Giver mulighed for at workflow kan kører manuelt
   pull_request:
-    types:
+    types: # Angiver hvilke typer af PR som workflow skal trigges på, kan fjernes for standard opsætning
       - opened
-    branches: [ "master" ]
+    branches: [ "master" ] #Navn på hoved branch
+    paths: # Fjernes hvis projektet er monolitisk
+      - "src/Cicd/**" #Sti til microservice her, fjernes hvis projektet er monolitisk
 
 permissions:
   contents: read
 
 env:
-  DOTNET_VERSION: "10.0.x"
-  SOLUTION_PATH: "CICD-Template.slnx"
+  DOTNET_VERSION: "10.0.x" #Target .Net version, skal matche projektes version
+  SOLUTION_PATH: "CICD-Template.slnx" #Navn på din solution fil
 
 jobs:
   Build-and-Test:
