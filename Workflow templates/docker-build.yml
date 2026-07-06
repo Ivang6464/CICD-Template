@@ -1,4 +1,4 @@
-name: CD
+name: CD - CiCd
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -7,18 +7,20 @@ name: CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] # navn på hoved branch
+    paths: # Fjernes hvis projektet er monolitisk
+      - "src/Cicd/**" #Sti til microservice her, fjernes hvis projektet er monolitisk
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: "Dit image navn her"
   GITHUB_ACTOR: "Dit github brugernavn her"
-  DOCKER_IMAGE_CONTEXT: src/CiCd
+  DOCKER_IMAGE_CONTEXT: src/CiCd #Stien til det projekt du ønsker at deploy her
 
 
 jobs:
-  Build-and-Deploy:
-    name: Build and Deploy
+  Build-and-Deploy-CiCd:
+    name: Build and Deploy CiCd
     runs-on: ubuntu-latest
     permissions:
       contents: read
