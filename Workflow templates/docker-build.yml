@@ -16,8 +16,8 @@ env:
 
 
 jobs:
-  build:
-
+  Build-and-Deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: read
